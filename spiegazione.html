@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spiegazione</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .glitch-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.3), 0 20px 60px rgba(0,0,0,0.5);
+            max-width: 700px;
+            padding: 50px 40px;
+            animation: fadeInScale 0.8s ease-out;
+            position: relative;
+            border: 2px solid rgba(255, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .alert-strip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #dc3545, #c82333, #dc3545);
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px 20px 0 0;
+            font-size: 14px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        h1 {
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .good-news {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .good-news h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .good-news p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .info-box p {
+            color: #333;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .danger-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .danger-card {
+            background: linear-gradient(135deg, #fff5f5, #ffe0e0);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #ffcdd2;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .danger-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(220, 53, 69, 0.2);
+        }
+
+        .danger-card h3 {
+            color: #dc3545;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .danger-card p {
+            color: #721c24;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .tips-section {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+
+        .tips-section h2 {
+            color: #2e7d32;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tip-item {
+            background: white;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border-left: 4px solid #4caf50;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tip-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            color: #2e7d32;
+            line-height: 1.6;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .stats-box h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .security-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .danger-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glitch-bg"></div>
+    
+    <div class="container">
+        <div class="alert-strip">
+            🚨 ALERT SICUREZZA • SECURITY ALERT • ALLARME DI SICUREZZA 🚨
+        </div>
+
+        <div class="reveal-section">
+            <div class="good-news">
+                <h2>✅ TRANQUILLO! Sei al sicuro!</h2>
+                <p>Questa era solo una dimostrazione educativa. Non è stato rubato nulla.<br>
+                <strong>MA se questo fosse stato un vero attacco...</strong></p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>🎯 Cosa hai appena fatto?</strong><br>
+                Hai scansionato un QR code sconosciuto trovato per strada. In pochi secondi, un criminale avrebbe potuto accedere a informazioni sensibili, installare malware o rubare le tue credenziali. Secondo le statistiche, <strong>il 67% delle persone scansiona QR code senza verificarne la provenienza</strong>.</p>
+            </div>
+
+            <h2 style="color: #dc3545; text-align: center; margin: 30px 0 20px 0; font-size: 24px;">
+                🚨 Cosa Poteva Succedere?
+            </h2>
+
+            <div class="danger-grid">
+                <div class="danger-card">
+                    <h3>💳 Furto Finanziario</h3>
+                    <p>Accesso ai tuoi conti bancari, carte di credito e pagamenti online. Svuotamento immediato del conto.</p>
+                </div>
+                <div class="danger-card">
+                    <h3>🔓 Furto Identità</h3>
+                    <p>Rubano nome, email, password, documenti e accedono ai tuoi account social e email.</p>
+                </div>
+                <div class="danger-card">
+                    <h3>📱 Malware</h3>
+                    <p>Installazione silenziosa di virus, spyware, keylogger che registrano tutto quello che digiti.</p>
+                </div>
+                <div class="danger-card">
+                    <h3>📸 Accesso Dispositivo</h3>
+                    <p>Controllo di fotocamera, microfono, posizione GPS, foto e contatti senza che tu te ne accorga.</p>
+                </div>
+            </div>
+
+            <div class="stats-box">
+                <h3>📊 Lo Sapevi Che...</h3>
+                <div class="stat">37%</div>
+                <div class="stat-label">degli attacchi informatici nel 2024 usano QR code malevoli</div>
+            </div>
+
+            <div class="tips-section">
+                <h2>🛡️ Come Proteggerti Davvero</h2>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">🚫</div>
+                    <div class="tip-content">
+                        <strong>Non scansionare QR code casuali</strong><br>
+                        Evita QR code trovati per strada, su adesivi, volantini o posti in luoghi pubblici non ufficiali.
+                    </div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-icon">🔍</div>
+                    <div class="tip-content">
+                        <strong>Verifica sempre l'URL</strong><br>
+                        Usa app che mostrano l'anteprima del link prima di aprirlo. Se l'URL sembra strano, non cliccare.
+                    </div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-icon">✅</div>
+                    <div class="tip-content">
+                        <strong>Fonti ufficiali only</strong><br>
+                        Scansiona solo QR code da fonti verificate: negozi fisici, ristoranti conosciuti, eventi ufficiali.
+                    </div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-icon">🔒</div>
+                    <div class="tip-content">
+                        <strong>Usa autenticazione a due fattori</strong><br>
+                        Attiva la verifica in due passaggi su tutti i tuoi account per una protezione extra.
+                    </div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-icon">🤔</div>
+                    <div class="tip-content">
+                        <strong>Se sembra troppo bello...</strong><br>
+                        "Vinci un iPhone!", "Regalo gratis!", "Clicca qui per 1000€" sono sempre truffe.
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="security-badge">
+                    🏆 CERTIFICATO DI CONSAPEVOLEZZA DIGITALE
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">
+                    Questa è una campagna educativa sulla sicurezza digitale.<br>
+                    Nessun dato è stato raccolto o compromesso.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

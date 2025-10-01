@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCESSO NON AUTORIZZATO!</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: -1;
+        }
+        .matrix-rain {
+            position: absolute;
+            color: #0f0;
+            font-size: 20px;
+            animation: fall linear infinite;
+            opacity: 0.3;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        .screen-glitch {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            animation: glitch 0.3s infinite;
+            mix-blend-mode: difference;
+        }
+        @keyframes glitch {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.1; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .terminal-window {
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1);
+            animation: flicker 0.15s infinite alternate;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
+        }
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #0f0;
+        }
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f00;
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 5px #f00; }
+            50% { box-shadow: 0 0 20px #f00; }
+        }
+        .terminal-title {
+            color: #f00;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .warning-banner {
+            background: #f00;
+            color: #000;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            animation: blink 1s infinite;
+            margin: 20px 0;
+            letter-spacing: 3px;
+        }
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+        .hack-message {
+            font-size: 28px;
+            color: #f00;
+            text-align: center;
+            margin: 30px 0;
+            text-shadow: 0 0 10px #f00;
+            animation: glitch-text 1s infinite;
+        }
+        @keyframes glitch-text {
+            0%, 90%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        .command-line {
+            color: #0f0;
+            margin: 10px 0;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .command-line::before {
+            content: "root@system:~# ";
+            color: #f00;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: #0f0;
+            animation: blink-cursor 1s step-end infinite;
+        }
+        @keyframes blink-cursor {
+            50% { opacity: 0; }
+        }
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #111;
+            border: 1px solid #0f0;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f00, #ff0, #f00);
+            background-size: 200% 100%;
+            animation: loading 2s ease-in-out, gradient-move 1s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+        }
+        @keyframes loading {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        @keyframes gradient-move {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .skull {
+            font-size: 80px;
+            text-align: center;
+            animation: skull-shake 0.5s infinite;
+            filter: drop-shadow(0 0 20px #f00);
+            margin: 20px 0;
+        }
+        @keyframes skull-shake {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        .countdown {
+            font-size: 48px;
+            color: #f00;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 999;
+        }
+        @media (max-width: 600px) {
+            .hack-message { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrix"></div>
+    <div class="screen-glitch"></div>
+    <div class="scanlines"></div>
+
+    <div class="container">
+        <div class="warning-banner">
+            ⚠ ATTENZIONE - ACCESSO NON AUTORIZZATO RILEVATO ⚠
+        </div>
+
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-button"></div>
+                <div class="terminal-button"></div>
+                <div class="terminal-button"></div>
+                <span class="terminal-title">SISTEMA COMPROMESSO</span>
+            </div>
+
+            <div class="skull">☠️</div>
+            
+            <div class="hack-message">
+                ACCESSO ROOT OTTENUTO
+            </div>
+
+            <div class="command-line">Inizializzazione exploit QR-CODE...</div>
+            <div class="command-line">Connessione al server remoto... STABILITA</div>
+            <div class="command-line">Bypass firewall... COMPLETATO</div>
+            <div class="command-line">Estrazione dati personali...</div>
+
+            <div class="progress-bar">
+                <div class="progress-fill">HACKING IN PROGRESS... 100%</div>
+            </div>
+
+            <div class="command-line">> Accesso fotocamera... OK</div>
+            <div class="command-line">> Accesso microfono... OK</div>
+            <div class="command-line">> Accesso contatti... OK</div>
+            <div class="command-line">> Accesso posizione GPS... OK</div>
+            <div class="command-line">> Lettura password salvate... OK</div>
+            <div class="command-line">$ Installazione backdoor... COMPLETATA</div>
+            <div class="command-line">$ Trasmissione dati a 45.142.xxx.xxx... IN CORSO<span class="cursor"></span></div>
+        </div>
+
+        <div class="countdown" id="countdown">AUTODISTRUZIONE DATI IN: 5</div>
+        <script>
+            setTimeout(() => {
+                window.location.href = 'spiegazione.html';
+            }, 5555);
+        </script>
+
+        <iframe src="hacked.html" style="width:100%;height:200px;border:2px solid #f00;background:#111;box-shadow:0 0 20px #f00;display:block;margin:30px 0 0 0;border-radius:8px;"></iframe>
+
+    <script>
+        // Effetto Matrix
+        const matrix = document.getElementById('matrix');
+        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+        
+        for(let i = 0; i < 50; i++) {
+            const span = document.createElement('span');
+            span.className = 'matrix-rain';
+            span.textContent = chars[Math.floor(Math.random() * chars.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            span.style.animationDelay = Math.random() * 5 + 's';
+            matrix.appendChild(span);
+        }
+
+        // Countdown
+        let count = 5;
+        const countdownEl = document.getElementById('countdown');
+        const interval = setInterval(() => {
+            count--;
+            if(count > 0) {
+                countdownEl.textContent = `AUTODISTRUZIONE DATI IN: ${count}`;
+            } else {
+                countdownEl.textContent = 'ERRORE: SISTEMA PROTETTO ✓';
+                countdownEl.style.color = '#0f0';
+                clearInterval(interval);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
