@@ -123,12 +123,19 @@
             60% { transform: translate(2px, 2px); }
             80% { transform: translate(2px, -2px); }
         }
+        /* Stile base per le linee di comando */
         .command-line {
             color: #0f0;
             margin: 10px 0;
             font-size: 14px;
             white-space: pre-wrap;
             word-break: break-all;
+            /* Inizialmente nascosto per l'effetto scrittura */
+            visibility: hidden; 
+        }
+        /* Stile per il testo scritto in tempo reale */
+        .command-line.typing-active {
+            visibility: visible;
         }
         .command-line::before {
             content: "root@system:~# ";
@@ -144,34 +151,7 @@
         @keyframes blink-cursor {
             50% { opacity: 0; }
         }
-        .progress-bar {
-            width: 100%;
-            height: 30px;
-            background: #111;
-            border: 1px solid #0f0;
-            margin: 20px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f00, #ff0, #f00);
-            background-size: 200% 100%;
-            animation: loading 2s ease-in-out, gradient-move 1s infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: bold;
-        }
-        @keyframes loading {
-            from { width: 0%; }
-            to { width: 100%; }
-        }
-        @keyframes gradient-move {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
+        
         .skull {
             font-size: 80px;
             text-align: center;
@@ -235,44 +215,123 @@
                 ACCESSO ROOT OTTENUTO
             </div>
 
-            <div class="command-line">Inizializzazione exploit QR-CODE...</div>
-            <div class="command-line">Connessione al server remoto... STABILITA</div>
-            <div class="command-line">Bypass firewall... COMPLETATO</div>
-            <div class="command-line">Estrazione dati personali...</div>
+            <!-- Linee di comando per l'effetto scrittura -->
+            <div class="command-line" data-text="Inizializzazione exploit QR-CODE..."></div>
+            <div class="command-line" data-text="Connessione al server remoto... STABILITA"></div>
+            <div class="command-line" data-text="Bypass firewall... COMPLETATO"></div>
+            <div class="command-line" data-text="Estrazione dati personali..."></div>
 
-            <div class="progress-bar">
-                <div class="progress-fill">HACKING IN PROGRESS... 100%</div>
-            </div>
-
-            <div class="command-line">> Accesso fotocamera... OK</div>
-            <div class="command-line">> Accesso microfono... OK</div>
-            <div class="command-line">> Accesso contatti... OK</div>
-            <div class="command-line">> Accesso posizione GPS... OK</div>
-            <div class="command-line">> Lettura password salvate... OK</div>
-            <div class="command-line">$ Installazione backdoor... COMPLETATA</div>
-            <div class="command-line">$ Trasmissione dati a 45.142.xxx.xxx... IN CORSO<span class="cursor"></span></div>
+            <!-- Nuove linee di accesso ai dati -->
+            <div class="command-line" data-text="> Accesso fotocamera... OK"></div>
+            <div class="command-line" data-text="> Accesso microfono... OK"></div>
+            <div class="command-line" data-text="> Accesso contatti... OK"></div>
+            <div class="command-line" data-text="> Accesso posizione GPS... OK"></div>
+            <div class="command-line" data-text="> Lettura password salvate... OK"></div>
+            <div class="command-line" data-text="$ Installazione backdoor... COMPLETATA"></div>
+            <div class="command-line" data-text="$ Trasmissione dati a 45.142.xxx.xxx... IN CORSO"><span class="cursor"></span></div>
         </div>
 
         <script>
-            setTimeout(() => {
-                window.location.href = 'spiegazione.html';
-            }, 5000);
-        </script>
+            // --- Script per l'Effetto Macchina da Scrivere ---
+            
+            // Ritardi e velocità
+            const TYPE_SPEED = 20; // ms tra ogni carattere
+            const LINE_DELAY = 250; // ms tra una riga e l'altra
 
-    <script>
-        // Effetto Matrix
-        const matrix = document.getElementById('matrix');
-        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-        
-        for(let i = 0; i < 50; i++) {
-            const span = document.createElement('span');
-            span.className = 'matrix-rain';
-            span.textContent = chars[Math.floor(Math.random() * chars.length)];
-            span.style.left = Math.random() * 100 + '%';
-            span.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            span.style.animationDelay = Math.random() * 5 + 's';
-            matrix.appendChild(span);
-        }
-    </script>
+            // Ottiene tutti gli elementi con la classe command-line
+            const commandLines = document.querySelectorAll('.command-line');
+            let currentLineIndex = 0;
+            let totalDuration = 0;
+
+            /**
+             * Esegue l'effetto di scrittura carattere per carattere su un elemento.
+             * @param {HTMLElement} element L'elemento div .command-line.
+             * @param {string} text Il testo completo da scrivere.
+             * @param {boolean} showCursor Indica se mostrare il cursore alla fine.
+             * @returns {Promise<number>} La durata totale della scrittura in ms.
+             */
+            function typeWriter(element, text, showCursor) {
+                return new Promise(resolve => {
+                    let charIndex = 0;
+                    element.innerHTML = ''; // Svuota il contenuto iniziale
+                    element.classList.add('typing-active'); // Rende la riga visibile
+
+                    const typingInterval = setInterval(() => {
+                        if (charIndex < text.length) {
+                            // Aggiunge il carattere successivo
+                            element.textContent += text.charAt(charIndex);
+                            charIndex++;
+                        } else {
+                            clearInterval(typingInterval);
+                            // Rimuove il cursore temporaneo se non è l'ultima riga
+                            if (!showCursor) {
+                                element.querySelector('.cursor')?.remove();
+                            }
+                            // Risolve la promessa con la durata
+                            resolve(text.length * TYPE_SPEED); 
+                        }
+                    }, TYPE_SPEED);
+                });
+            }
+
+            /**
+             * Itera su tutte le linee di comando ed esegue l'effetto.
+             */
+            async function startTypingSequence() {
+                for (let i = 0; i < commandLines.length; i++) {
+                    const lineElement = commandLines[i];
+                    const fullText = lineElement.getAttribute('data-text');
+                    
+                    // Controlla se è l'ultima riga per gestire il cursore
+                    const isLastLine = (i === commandLines.length - 1);
+                    
+                    let cursorElement = null;
+
+                    if (isLastLine) {
+                        // Sposta il cursore esistente per l'ultima riga
+                        cursorElement = lineElement.querySelector('.cursor');
+                        lineElement.removeChild(cursorElement); // Rimuove temporaneamente
+                    }
+                    
+                    // Esegue la scrittura
+                    const duration = await typeWriter(lineElement, fullText, isLastLine);
+                    totalDuration += duration + LINE_DELAY;
+
+                    if (isLastLine && cursorElement) {
+                        // Aggiunge il cursore blinkante alla fine dell'ultima riga
+                        lineElement.appendChild(cursorElement);
+                    }
+
+                    // Attende il ritardo tra una riga e l'altra (tranne dopo l'ultima)
+                    if (!isLastLine) {
+                        await new Promise(resolve => setTimeout(resolve, LINE_DELAY));
+                    }
+                }
+                
+                // Imposta il reindirizzamento dopo che l'ultima riga è stata completata
+                console.log(`Sequenza completata. Reindirizzamento tra 5 secondi. Durata totale: ${totalDuration / 1000}s`);
+                setTimeout(() => {
+                    window.location.href = 'spiegazione.html';
+                }, 5000);
+            }
+
+            // Avvia la sequenza all'avvio
+            startTypingSequence();
+
+            // Effetto Matrix (Codice esistente)
+            const matrix = document.getElementById('matrix');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            for(let i = 0; i < 50; i++) {
+                const span = document.createElement('span');
+                span.className = 'matrix-rain';
+                span.textContent = chars[Math.floor(Math.random() * chars.length)];
+                span.style.left = Math.random() * 100 + '%';
+                span.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                span.style.animationDelay = Math.random() * 5 + 's';
+                matrix.appendChild(span);
+            }
+        </script>
+    </div>
 </body>
 </html>
