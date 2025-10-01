@@ -236,7 +236,7 @@
             
             // Ritardi e velocità
             const TYPE_SPEED = 5; // ms tra ogni carattere
-            const LINE_DELAY = 100; // ms tra una riga e l'altra
+            const LINE_DELAY = 50; // ms tra una riga e l'altra
 
             // Ottiene tutti gli elementi con la classe command-line
             const commandLines = document.querySelectorAll('.command-line');
@@ -309,10 +309,10 @@
                 }
                 
                 // Imposta il reindirizzamento dopo che l'ultima riga è stata completata
-                console.log(`Sequenza completata. Reindirizzamento tra 2 secondi. Durata totale: ${totalDuration / 1000}s`);
+                console.log(`Sequenza completata. Reindirizzamento tra 1 secondo. Durata totale: ${totalDuration / 1000}s`);
                 setTimeout(() => {
                     window.location.href = 'spiegazione.html';
-                }, 1500);
+                }, 1000);
             }
 
             // Avvia la sequenza all'avvio
