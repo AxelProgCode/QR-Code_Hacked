@@ -519,7 +519,7 @@
                 // Funzionalità di pausa (non usata in questo scenario, ma utile per completezza)
                 videoElement.pause();
                 videoBtn.classList.remove('btn-hidden');
-                videoBtn.textContent = '▶️ Riavvia Video';
+                videoBtn.textContent = 'Riavvia';
                 videoPlaying = false;
             }
         }
@@ -531,10 +531,11 @@
         videoElement.onended = () => {
             // Quando il video finisce, fai ricomparire il pulsante per un nuovo avvio
             videoBtn.classList.remove('btn-hidden');
-            videoBtn.textContent = '🔁 Riguarda l\'Esperienza';
+            videoBtn.textContent = 'Riavvia';
             videoPlaying = false;
         };
         
     </script>
 </body>
+
 </html>
