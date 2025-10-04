@@ -33,11 +33,12 @@
         }
 
         .container {
+            /* Aggiornato il padding-top per tenere conto della striscia di avviso */
             background: rgba(255, 255, 255, 0.98);
             border-radius: 20px;
             box-shadow: 0 0 60px rgba(255, 0, 0, 0.3), 0 20px 60px rgba(0,0,0,0.5);
             max-width: 700px;
-            padding: 50px 40px;
+            padding: 50px 40px; 
             animation: fadeInScale 0.8s ease-out;
             position: relative;
             border: 2px solid rgba(255, 0, 0, 0.2);
@@ -53,6 +54,77 @@
                 transform: scale(1);
             }
         }
+
+        /* STILE PER IL VIDEO E IL PULSANTE CENTRATO (TIPO YOUTUBE) */
+        .video-container {
+            width: 100%;
+            margin-bottom: 20px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Importante per posizionare il pulsante in modo assoluto */
+            justify-content: center; /* Centra il pulsante (anche se absolute) */
+            cursor: pointer; /* Indica che il contenitore è cliccabile */
+        }
+
+        .responsive-video {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border-radius: 12px;
+            display: block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-audio {
+            /* Posizionamento assoluto al centro */
+            position: absolute; 
+            top: 50%; /* Sposta il 50% dall'alto */
+            left: 50%; /* Sposta il 50% da sinistra */
+            transform: translate(-50%, -50%); /* Sposta indietro il 50% delle sue dimensioni per centrare */
+            z-index: 10; 
+            
+            /* Stili del pulsante */
+            padding: 15px 30px; 
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px; 
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(45deg, #667eea, #764ba2); 
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Classe per nascondere il pulsante dopo l'avvio */
+        .btn-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .btn-audio {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        .btn-audio:hover {
+            transform: translate(-50%, -50%) scale(1.05); 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+        }
+        
+        .btn-audio:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: translate(-50%, -50%);
+        }
+        /* FINE STILE AUDIO/VIDEO */
 
         .alert-strip {
             position: absolute;
@@ -305,11 +377,19 @@
     <div class="glitch-bg"></div>
     
     <div class="container">
+        <div class="video-container">
+            <video id="security-video" class="responsive-video" muted>
+                <source src="video.mp4" type="video/mp4">
+                Il tuo browser non supporta l'elemento video.
+            </video>
+            <button id="video-btn" class="btn-audio">Ascolta</button>
+        </div>
+
         <div class="alert-strip">
             🚨 ALERT SICUREZZA • SECURITY ALERT • ALLARME DI SICUREZZA 🚨
         </div>
 
-        <div class="reveal-section">
+        <div class="reveal-section" id="content-to-read">
             <div class="good-news">
                 <h2>✅ TRANQUILLO! Sei al sicuro!</h2>
                 <p>Questa era solo una dimostrazione educativa. Non è stato rubato nulla.<br>
@@ -407,5 +487,54 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Riferimenti agli elementi
+        const videoElement = document.getElementById('security-video');
+        const videoBtn = document.getElementById('video-btn');
+        const videoIcon = document.getElementById('video-icon');
+        
+        let videoPlaying = false; // Traccia lo stato del video
+        
+        // Funzione per avviare o mettere in pausa il video
+        function toggleVideo() {
+            if (!videoPlaying) {
+                // 1. Rimuove l'attributo 'muted' per attivare l'audio
+                videoElement.muted = false;
+                
+                // 2. Avvia il video
+                videoElement.play().then(() => {
+                    // Nasconde il pulsante e aggiorna lo stato
+                    videoBtn.classList.add('btn-hidden');
+                    videoPlaying = true;
+                    // Opzionale: puoi aggiornare l'icona qui se volessi un pulsante Pausa/Play
+                }).catch(error => {
+                    // Gestisce l'errore se la riproduzione è bloccata (es. permessi)
+                    console.error("Errore nell'avvio del video:", error);
+                    // Riappare il pulsante in caso di errore
+                    videoBtn.classList.remove('btn-hidden');
+                    videoBtn.textContent = '⚠️ Errore Avvio Video';
+                });
+            } else {
+                // Funzionalità di pausa (non usata in questo scenario, ma utile per completezza)
+                videoElement.pause();
+                videoBtn.classList.remove('btn-hidden');
+                videoBtn.textContent = '▶️ Riavvia Video';
+                videoPlaying = false;
+            }
+        }
+        
+        // Listener per il pulsante
+        videoBtn.addEventListener('click', toggleVideo);
+
+        // Listener per quando il video finisce
+        videoElement.onended = () => {
+            // Quando il video finisce, fai ricomparire il pulsante per un nuovo avvio
+            videoBtn.classList.remove('btn-hidden');
+            videoBtn.textContent = '🔁 Riguarda l\'Esperienza';
+            videoPlaying = false;
+        };
+        
+    </script>
 </body>
 </html>
