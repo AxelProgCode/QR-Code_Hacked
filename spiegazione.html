@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spiegazione</title>
+    <title>Spiegazione di Sicurezza</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0a0a0a;
             min-height: 100vh;
             display: flex;
@@ -41,6 +42,7 @@
             animation: fadeInScale 0.8s ease-out;
             position: relative;
             border: 2px solid rgba(255, 0, 0, 0.2);
+            width: 100%;
         }
 
         @keyframes fadeInScale {
@@ -80,6 +82,7 @@
             text-align: center;
             margin-bottom: 15px;
             font-size: 32px;
+            font-weight: 800;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -89,6 +92,109 @@
             font-size: 18px;
             margin-bottom: 30px;
             font-style: italic;
+        }
+
+        /* Sezione Hack Batteria */
+        .battery-hack-section {
+            background: #ffebeb;
+            border: 3px solid #ff4d4d;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 77, 77, 0.3);
+        }
+
+        .battery-hack-section h2 {
+            color: #dc3545;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        #battery-status-display {
+            display: none; /* Nascondi inizialmente */
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .battery-level-container {
+            width: 100%;
+            max-width: 250px;
+            height: 50px;
+            border: 4px solid #333;
+            border-radius: 10px;
+            position: relative;
+            background: #fff;
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .battery-level-container::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 10px;
+            width: 8px;
+            height: 30px;
+            background: #333;
+            border-radius: 0 3px 3px 0;
+        }
+
+        #battery-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+
+        #battery-fill.charging {
+             background: linear-gradient(90deg, #3498db, #2ecc71);
+             animation: chargePulse 1s infinite alternate;
+        }
+        
+        @keyframes chargePulse {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
+
+        #battery-percent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: 800;
+            color: #333;
+            mix-blend-mode: difference;
+            text-shadow: 0 0 5px white;
+        }
+        
+        #battery-info-text {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        #reveal-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        #reveal-button:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
         }
 
         .good-news {
@@ -160,6 +266,32 @@
             line-height: 1.5;
         }
 
+        .stats-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .stats-box h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
         .tips-section {
             background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
             padding: 30px;
@@ -194,76 +326,6 @@
         .tip-content {
             color: #2e7d32;
             line-height: 1.6;
-        }
-
-        .stats-box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .stats-box h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-        .stat {
-            font-size: 48px;
-            font-weight: bold;
-            margin: 10px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
         }
 
         .footer {
@@ -306,9 +368,9 @@
     
     <div class="container">
         <div class="alert-strip">
-            🚨 ALERT SICUREZZA • SECURITY ALERT • ALLARME DI SICUREZZA 🚨
+            🚨 ATTENZIONE ALLA TUA PRIVACY • SECURITY ALERT • ALLARME DI SICUREZZA 🚨
         </div>
-
+        
         <div class="reveal-section">
             <div class="good-news">
                 <h2>✅ TRANQUILLO! È tutto ok!</h2>
@@ -394,6 +456,25 @@
                 </div>
             </div>
 
+            <div class="battery-hack-section">
+                <h2>💣 ESEMPIO PRATICO DI HACKING (innocuo)</h2>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Clicca il seguente bottone per visualizzare la percentuale reale della batteria del tuo dispositivo
+                </p>
+                <button id="reveal-button" onclick="checkBatteryStatus()">
+                    Clicca qui
+                </button>
+
+                <div id="battery-status-display">
+                    <div class="battery-level-container">
+                        <div id="battery-fill"></div>
+                        <span id="battery-percent">0%</span>
+                    </div>
+                    <p id="battery-info-text">Caricamento...</p>
+                </div>
+            </div>
+
+
             <div class="footer">
                 <h1>Lascia un Feedback:</h1>
                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSecPfcGkkUUr-OZ4YhTN8yHRGWVG1xEXIsASqHCUhIHBux6Hg/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Caricamento…</iframe>
@@ -407,5 +488,111 @@
             </div>
         </div>
     </div>
+
+    <script>
+        /**
+         * Funzione per simulare l'accesso allo stato della batteria.
+         * La Battery Status API (navigator.getBattery()) non è supportata da tutti i browser
+         * o è stata limitata per motivi di privacy (proprio a causa del rischio di fingerprinting!).
+         * Se l'API non è disponibile, viene mostrata una percentuale casuale per la demo.
+         */
+        function checkBatteryStatus() {
+            const display = document.getElementById('battery-status-display');
+            const button = document.getElementById('reveal-button');
+            const fill = document.getElementById('battery-fill');
+            const percent = document.getElementById('battery-percent');
+            const infoText = document.getElementById('battery-info-text');
+
+            // 1. Nascondi il pulsante e mostra il display dello stato
+            button.style.display = 'none';
+            display.style.display = 'flex';
+
+            if ('getBattery' in navigator) {
+                // 2. Tenta di accedere alla Battery Status API
+                navigator.getBattery().then(function(battery) {
+                    // Calcola la percentuale
+                    const level = Math.round(battery.level * 100);
+                    
+                    // Aggiorna la barra di riempimento e il testo
+                    fill.style.width = level + '%';
+                    percent.textContent = level + '%';
+                    infoText.textContent = battery.charging ? 'Dispositivo in carica.' : 'Dispositivo non in carica.';
+                    
+                    // Aggiorna il colore in base al livello
+                    if (level < 20) {
+                        fill.style.background = '#ff4d4d'; // Rosso
+                    } else if (level < 50) {
+                        fill.style.background = '#ffc107'; // Giallo
+                    } else {
+                        fill.style.background = 'linear-gradient(90deg, #4caf50, #8bc34a)'; // Verde
+                    }
+
+                    // Aggiungi la classe di animazione se è in carica
+                    if (battery.charging) {
+                         fill.classList.add('charging');
+                    } else {
+                         fill.classList.remove('charging');
+                    }
+
+                    // Log dell'informazione rubata (simulazione)
+                    console.log("--- INFORMAZIONI DELLA BATTERIA RACCOLTE ---");
+                    console.log("Livello Batteria:", level + '%');
+                    console.log("In Carica:", battery.charging);
+                    console.log("Tempo rimanente allo scaricamento (in secondi):", battery.dischargingTime);
+                    console.log("-----------------------------------------------------");
+
+                }).catch(function(error) {
+                    console.error('Impossibile accedere allo stato della batteria:', error);
+                    simulateBatteryStatus();
+                });
+            } else {
+                // 3. API non supportata o disabilitata: mostra una simulazione per la demo
+                simulateBatteryStatus();
+            }
+        }
+        
+        // Funzione di fallback per la simulazione
+        function simulateBatteryStatus() {
+             const fill = document.getElementById('battery-fill');
+             const percent = document.getElementById('battery-percent');
+             const infoText = document.getElementById('battery-info-text');
+             
+             // Genera dati casuali
+             const randomLevel = Math.floor(Math.random() * (95 - 15 + 1)) + 15; // tra 15% e 95%
+             const isCharging = Math.random() < 0.5; // 50% di probabilità di essere in carica
+
+             // Aggiorna la barra di riempimento e il testo con i dati simulati
+             fill.style.width = randomLevel + '%';
+             percent.textContent = randomLevel + '% (Simulato)';
+             infoText.textContent = isCharging ? 'Dispositivo in carica.' : 'Dispositivo non in carica.';
+             
+             // Aggiorna il colore (simulazione)
+             if (randomLevel < 20) {
+                 fill.style.background = '#ff4d4d'; // Rosso
+             } else if (randomLevel < 50) {
+                 fill.style.background = '#ffc107'; // Giallo
+             } else {
+                 fill.style.background = 'linear-gradient(90deg, #4caf50, #8bc34a)'; // Verde
+             }
+
+             // Aggiungi la classe di animazione se è in carica
+             if (isCharging) {
+                 fill.classList.add('charging');
+             } else {
+                 fill.classList.remove('charging');
+             }
+             
+             console.log("--- INFORMAZIONI DELLA BATTERIA SIMULATE ---");
+             console.log("Livello Batteria (Simulato):", randomLevel + '%');
+             console.log("In Carica (Simulato):", isCharging);
+             console.log("-----------------------------------------------------");
+
+             // Messaggio per l'utente se l'API non è disponibile
+             if (!('getBattery' in navigator)) {
+                 percent.textContent += " (API non disponibile/bloccata)";
+                 infoText.textContent += " (La funzione reale è bloccata dal browser per motivi di privacy.)";
+             }
+        }
+    </script>
 </body>
 </html>
