@@ -198,6 +198,30 @@
             transform: translateY(-2px);
         }
 
+        #counter-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #28a745; /* Green color for positive action */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            margin-top: 30px;
+            text-decoration: none; /* Make sure the link looks like a button */
+            font-weight: 800;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        #counter-button:hover {
+            background-color: #1e7e34;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
+        }
+
         .good-news {
             background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
@@ -475,6 +499,7 @@
                 </div>
             </div>
 
+            <a href="counter.html" id="counter-button">Vedi quanti altri ci sono cascati</a>
 
             <div class="footer">
                 <h1>Lascia un Feedback:</h1>
