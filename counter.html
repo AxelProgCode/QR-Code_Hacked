@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatore Scansioni</title>
+    <!-- Caricamento di Tailwind CSS per lo styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Impostazione del font Inter e uno sfondo con gradiente drammatico */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #111827; /* Sfondo scuro per contrasto e impatto */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        /* Stile avanzato per l'elemento card principale */
+        .alert-card {
+            background-color: #ffffff;
+            /* Animazione d'ingresso */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInTranslate 0.7s ease-out forwards;
+        }
+        @keyframes fadeInTranslate {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Stile specifico per l'area del contatore */
+        .counter-box {
+            background: linear-gradient(145deg, #fef2f2 0%, #ffeceb 100%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 15px -3px rgba(252, 165, 165, 0.5); /* Ombra rossa leggera */
+        }
+        /* Colore per i numeri del contatore */
+        #sfcs9gm7p6wdef9hqszmjlsg76acgfmewzw {
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 0 0 10px rgba(220, 38, 38, 0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenitore principale centrato e responsivo -->
+    <div class="alert-card w-full max-w-lg rounded-3xl p-8 md:p-10 shadow-2xl transition-all duration-500 text-center">
+        
+        <!-- Intestazione migliorata con Icona di Avviso -->
+        <header class="mb-10 border-b-2 border-red-100 pb-6">
+            <!-- Icona di Avvertimento (simbolo del pericolo) -->
+            <svg class="w-16 h-16 text-red-600 mx-auto mb-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.398 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-2 tracking-tight uppercase">QR CODE SCANSIONATO!</h1>
+            <p class="text-lg text-red-700 font-bold italic">
+                Guarda quante persone lo hanno scansionato prima di te.
+            </p>
+        </header>
+
+        <!-- Area del Contatore: Stile avanzato per evidenziare la sezione "dati sensibili" -->
+        <section class="counter-box p-8 rounded-2xl mb-8">
+            <p class="text-xl font-medium text-red-800 mb-4 uppercase tracking-wider">Scansioni Rilevate</p>
+            
+            <!-- Contenitore del contatore con stile grande -->
+            <div class="flex justify-center items-center">
+                <div id="sfcs9gm7p6wdef9hqszmjlsg76acgfmewzw" class="text-7xl font-extrabold text-red-900 leading-none">
+                    <!-- Il contatore verrà iniettato qui dallo script esterno -->
+                </div>
+            </div>
+            
+            <!-- Script Contatore -->
+            <script type="text/javascript" src="https://counter1.optistats.ovh/private/counter.js?c=s9gm7p6wdef9hqszmjlsg76acgfmewzw&down=async" async></script>
+            <noscript>
+                <a href="https://www.contatoreaccessi.com" title="contatori dati internet">
+                    <img src="https://counter1.optistats.ovh/private/contatoreaccessi.php?c=s9gm7p6wdef9hqszmjlsg76acgfmewzw" border="0" title="contatori dati internet" alt="contatori dati internet" class="mt-6 inline-block rounded shadow-md transition-shadow duration-300 hover:shadow-lg">
+                </a>
+            </noscript>
+            <!-- Fine Script Contatore -->
+
+        </section>
+        
+        <!-- Bottone per rimandare alla spiegazione -->
+        <div class="text-center">
+            <a href="spiegazione.html" class="inline-flex items-center justify-center space-x-2 px-8 py-4 bg-gray-800 text-white font-bold text-lg rounded-full shadow-xl hover:bg-gray-900 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300" target="_blank">
+                <span>VAI ALLA SPIEGAZIONE</span>
+            </a>
+        </div>
+
+        <!-- Piè di Pagina -->
+        <footer class="mt-12 text-center text-sm text-gray-500">
+            <p>AVVISO: Questa pagina fa parte di una campagna di sensibilizzazione contro il Quishing.</p>
+            <p class="mt-1 font-semibold">Nessun dato personale è stato raccolto o compromesso.</p>
+        </footer>
+    </div>
+
+    <script>
+        // L'animazione è gestita tramite CSS.
+    </script>
+
+</body>
+</html>
